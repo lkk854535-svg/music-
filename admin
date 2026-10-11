@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Tokyo Beats</title>
+  <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Kantumruy Pro', sans-serif;
+    }
+    body {
+      background: #0b0f19;
+      color: #f1f5f9;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .box {
+      background: #151d30;
+      border: 1px solid #2a3754;
+      border-radius: 20px;
+      padding: 28px 20px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.3rem;
+      color: #38bdf8;
+    }
+    .form-group {
+      margin-bottom: 14px;
+    }
+    label {
+      display: block;
+      font-size: 0.85rem;
+      color: #94a3b8;
+      margin-bottom: 5px;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      background: #0b0f19;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 0.9rem;
+    }
+    input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      background: #0b0f19;
+      border: 1px dashed #38bdf8;
+      border-radius: 10px;
+      color: #94a3b8;
+      font-size: 0.85rem;
+    }
+    input:focus {
+      outline: none;
+      border-color: #38bdf8;
+    }
+    .btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.95rem;
+      margin-top: 5px;
+    }
+    .btn-blue { background: #0284c7; color: #fff; }
+    .btn-pink { background: #ff2a85; color: #fff; }
+    
+    .song-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 12px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      margin-bottom: 8px;
+      font-size: 0.85rem;
+    }
+    .song-info {
+      max-width: 75%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .del-btn {
+      background: #ef4444;
+      border: none;
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.78rem;
+    }
+    .del-btn:active {
+      transform: scale(0.92);
+    }
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 15px;
+      color: #64748b;
+      font-size: 0.85rem;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ផ្ទាំង Dashboard Admin (បើកមកឃើញភ្លាម គ្មាន Password) -->
+  <div class="box" id="dashBox">
+    <h2>⚙️ គ្រប់គ្រង Website & បទចម្រៀង</h2>
+
+    <div class="form-group">
+      <label>Link Telegram ផ្លូវការ៖</label>
+      <input type="text" id="tgInput" placeholder="https://t.me/yourusername">
+    </div>
+    <button class="btn btn-blue" onclick="saveTg()">រក្សាទុក Link Telegram</button>
+
+    <hr style="border: 0; border-top: 1px dashed #334155; margin: 20px 0;">
+
+    <h3 style="font-size: 1rem; color: #ff2a85; margin-bottom: 12px;">+ បន្ថែមបទចម្រៀង MP3 ថ្មី</h3>
+    <div class="form-group">
+      <label>ចំណងជើងបទចម្រៀង៖</label>
+      <input type="text" id="sTitle" placeholder="ឧ. Sakura Vibes">
+    </div>
+    <div class="form-group">
+      <label>ឈ្មោះតារាចម្រៀង៖</label>
+      <input type="text" id="sArtist" placeholder="ឧ. Tokyo Lofi">
+    </div>
+    <div class="form-group">
+      <label>Link រូបភាព Cover (ឬទុកទំនេរ)៖</label>
+      <input type="text" id="sCover" placeholder="https://...jpg">
+    </div>
+    
+    <!-- កន្លែងរើស MP3 ចេញពីទូរស័ព្ទ -->
+    <div class="form-group">
+      <label>ជ្រើសរើសឯកសារ MP3 ពីទូរស័ព្ទ៖</label>
+      <input type="file" id="sFile" accept="audio/mp3,audio/*">
+    </div>
+    <div class="form-group">
+      <label>ឬដាក់ Link MP3 ផ្ទាល់ (Online URL)៖</label>
+      <input type="text" id="sSrc" placeholder="https://...mp3">
+    </div>
+
+    <button class="btn btn-pink" onclick="addSong()">+ បញ្ចូលបទនេះ</button>
+
+    <h3 style="font-size: 0.95rem; margin: 20px 0 10px 0; color: #94a3b8;">បញ្ជីបទចម្រៀង (ចុចលុបបាន)៖</h3>
+    <div id="songList"></div>
+
+    <a class="back-link" href="index.html">← ទៅកាន់ទំព័រមុខចាក់ចម្រៀងវិញ</a>
+  </div>
+
+  <script>
+    let playlist = JSON.parse(localStorage.getItem('my_tokyo_playlist')) || [
+      {
+        title: "Midnight in Shibuya",
+        artist: "東京サウンド • Lofi Beats",
+        cover: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=400",
+        src: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3"
+      },
+      {
+        title: "Kyoto Rain & Tea",
+        artist: "桜の夢 • Sakura Beats",
+        cover: "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?w=400",
+        src: "https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=chill-abstract-intention-12099.mp3"
+      }
+    ];
+
+    // បើកមកទាញទិន្នន័យបង្ហាញភ្លាមៗ
+    window.onload = function() {
+      document.getElementById('tgInput').value = localStorage.getItem('my_tg_link') || "https://t.me/";
+      renderList();
+    };
+
+    function saveTg() {
+      const val = document.getElementById('tgInput').value.trim();
+      if (val) {
+        localStorage.setItem('my_tg_link', val);
+        alert("បានរក្សាទុក Telegram Link ជោគជ័យ!");
+      }
+    }
+
+    function renderList() {
+      const listEl = document.getElementById('songList');
+      listEl.innerHTML = '';
+      if (playlist.length === 0) {
+        listEl.innerHTML = '<p style="color:#64748b; font-size:0.85rem; text-align:center;">គ្មានបទចម្រៀងទេ</p>';
+        return;
+      }
+      playlist.forEach((s, idx) => {
+        const row = document.createElement('div');
+        row.className = 'song-item';
+        row.innerHTML = `
+          <div class="song-info">
+            <b>${idx + 1}.</b> ${s.title} <small style="color:#94a3b8;">(${s.artist})</small>
+          </div>
+          <button class="del-btn" onclick="delSong(${idx})">លុប</button>
+        `;
+        listEl.appendChild(row);
+      });
+    }
+
+    function addSong() {
+      const t = document.getElementById('sTitle').value.trim();
+      const a = document.getElementById('sArtist').value.trim();
+      const c = document.getElementById('sCover').value.trim();
+      const fileInput = document.getElementById('sFile');
+      const urlInput = document.getElementById('sSrc').value.trim();
+
+      if (!t || !a) {
+        alert("សូមបំពេញ ចំណងជើងបទ និង ឈ្មោះតារាចម្រៀង!");
+        return;
+      }
+
+      // ប្រសិនបើរើស File MP3 ចេញពីទូរស័ព្ទ
+      if (fileInput.files && fileInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const base64Audio = e.target.result;
+          saveNewTrack(t, a, c, base64Audio);
+        };
+        reader.readAsDataURL(fileInput.files[0]);
+      } else if (urlInput) {
+        saveNewTrack(t, a, c, urlInput);
+      } else {
+        alert("សូមរើស File MP3 ពីទូរស័ព្ទ ឬដាក់ Link MP3!");
+      }
+    }
+
+    function saveNewTrack(title, artist, cover, audioSrc) {
+      playlist.push({
+        title: title,
+        artist: artist,
+        cover: cover || "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=400",
+        src: audioSrc
+      });
+
+      try {
+        localStorage.setItem('my_tokyo_playlist', JSON.stringify(playlist));
+        renderList();
+        document.getElementById('sTitle').value = '';
+        document.getElementById('sArtist').value = '';
+        document.getElementById('sCover').value = '';
+        document.getElementById('sFile').value = '';
+        document.getElementById('sSrc').value = '';
+        alert("បានបន្ថែមបទ MP3 ជោគជ័យ!");
+      } catch (err) {
+        alert("ទំហំ MP3 ធំពេកសម្រាប់ផ្ទុកលើ Browser! សូមប្រើ Link MP3 (URL) វិញ។");
+      }
+    }
+
+    // មុខងារចុចលុបបទចម្រៀង
+    function delSong(idx) {
+      if (confirm(`តើអ្នកចង់លុបបទ "${playlist[idx].title}" មែនទេ?`)) {
+        playlist.splice(idx, 1);
+        localStorage.setItem('my_tokyo_playlist', JSON.stringify(playlist));
+        renderList();
+      }
+    }
+  </script>
+</body>
+</html>
