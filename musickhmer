@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tokyo Lofi & Beats - 日本の音楽</title>
+  
+  <meta property="og:title" content="Tokyo Lofi & Beats - 日本の音楽">
+  <meta property="og:description" content="Chill out with anime-style lofi beats from Tokyo.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=600">
+  <meta name="theme-color" content="#ff2a85">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;600;700&family=M+PLUS+Rounded+1c:wght@400;700;800&family=Orbitron:wght@600;900&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --neon-pink: #ff2a85;
+      --neon-blue: #00f2fe;
+      --neon-purple: #9d4edd;
+      --bg-dark: #070913;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Kantumruy Pro', 'M PLUS Rounded 1c', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(157, 78, 221, 0.25) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(255, 42, 133, 0.2) 0%, transparent 40%);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      overflow-x: hidden;
+      position: relative;
+    }
+    .cyber-stream {
+      position: fixed;
+      left: -100%;
+      width: 60%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
+      box-shadow: 0 0 12px var(--neon-blue);
+      animation: streamAcross 7s linear infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .stream-1 { top: 22%; animation-delay: 0s; }
+    .stream-2 { 
+      top: 75%; 
+      animation-delay: 3.5s; 
+      background: linear-gradient(90deg, transparent, var(--neon-pink), transparent);
+      box-shadow: 0 0 12px var(--neon-pink);
+    }
+    @keyframes streamAcross {
+      0% { transform: translateX(0); opacity: 0; }
+      20% { opacity: 0.8; }
+      80% { opacity: 0.8; }
+      100% { transform: translateX(350vw); opacity: 0; }
+    }
+    .sakura-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .petal {
+      position: absolute;
+      background: radial-gradient(circle, #ff9ebb, #ff2a85);
+      border-radius: 150% 0 150% 0;
+      opacity: 0.7;
+      filter: drop-shadow(0 0 6px rgba(255, 42, 133, 0.8));
+      animation: fall linear infinite;
+    }
+    @keyframes fall {
+      0% { transform: translate(0, -10px) rotate(0deg) scale(0.8); opacity: 0.9; }
+      50% { transform: translate(80px, 50vh) rotate(180deg) scale(1.1); }
+      100% { transform: translate(-40px, 105vh) rotate(360deg) scale(0.6); opacity: 0; }
+    }
+    .player-card {
+      position: relative;
+      z-index: 2;
+      background: rgba(18, 20, 36, 0.85);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 28px;
+      padding: 32px 24px;
+      width: 100%;
+      max-width: 380px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 35px rgba(255, 42, 133, 0.25);
+      text-align: center;
+      animation: floatCard 6s ease-in-out infinite;
+    }
+    @keyframes floatCard {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-7px); }
+    }
+    .japanese-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      padding: 5px 16px;
+      border-radius: 20px;
+      background: rgba(255, 42, 133, 0.15);
+      border: 1px solid var(--neon-pink);
+      color: #ff9ebb;
+      margin-bottom: 20px;
+      box-shadow: 0 0 12px rgba(255, 42, 133, 0.4);
+    }
+    .disc-wrapper {
+      position: relative;
+      width: 180px;
+      height: 180px;
+      margin: 0 auto 18px;
+    }
+    .vinyl {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: conic-gradient(#111, #222, #111, #333, #111);
+      border: 4px solid #1a1c2e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), 0 0 22px rgba(0, 242, 254, 0.35);
+      position: relative;
+    }
+    .disc-img {
+      width: 105px;
+      height: 105px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #ff2a85;
+      animation: spin 10s linear infinite;
+      animation-play-state: paused;
+    }
+    .spinning { animation-play-state: running !important; }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+    .equalizer-bar-group {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 4px;
+      height: 22px;
+      margin-bottom: 14px;
+    }
+    .eq-bar {
+      width: 3px;
+      background: var(--neon-blue);
+      border-radius: 2px;
+      height: 4px;
+      transition: height 0.2s ease;
+    }
+    .playing-eq .eq-bar:nth-child(1) { animation: eqMove 0.8s infinite alternate ease-in-out; }
+    .playing-eq .eq-bar:nth-child(2) { animation: eqMove 0.5s infinite alternate ease-in-out 0.1s; }
+    .playing-eq .eq-bar:nth-child(3) { animation: eqMove 0.9s infinite alternate ease-in-out 0.2s; }
+    .playing-eq .eq-bar:nth-child(4) { animation: eqMove 0.6s infinite alternate ease-in-out 0.3s; }
+    .playing-eq .eq-bar:nth-child(5) { animation: eqMove 0.7s infinite alternate ease-in-out 0.15s; }
+    @keyframes eqMove {
+      0% { height: 4px; background: var(--neon-blue); }
+      100% { height: 20px; background: var(--neon-pink); }
+    }
+    .song-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 3px;
+    }
+    .artist-name {
+      font-size: 0.88rem;
+      color: var(--neon-blue);
+      letter-spacing: 1px;
+      margin-bottom: 18px;
+    }
+    .progress-box { width: 100%; margin-bottom: 18px; }
+    .progress-bar-container {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 10px;
+      cursor: pointer;
+      overflow: hidden;
+      position: relative;
+    }
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
+      box-shadow: 0 0 10px var(--neon-pink);
+      border-radius: 10px;
+      transition: width 0.1s linear;
+    }
+    .time-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: #94a3b8;
+      margin-top: 6px;
+      font-family: 'Orbitron', sans-serif;
+    }
+    .controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 22px;
+      margin-bottom: 24px;
+    }
+    .ctrl-btn {
+      background: none;
+      border: none;
+      color: #cbd5e1;
+      font-size: 1.4rem;
+      cursor: pointer;
+    }
+    .ctrl-btn:active { transform: scale(0.85); color: var(--neon-blue); }
+    .play-btn {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+      border: none;
+      color: #fff;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 0 22px rgba(255, 42, 133, 0.65);
+    }
+    .play-btn:active { transform: scale(0.9); }
+    .telegram-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 13px;
+      background: linear-gradient(90deg, rgba(0, 136, 204, 0.2), rgba(0, 242, 254, 0.15));
+      border: 1px solid var(--neon-blue);
+      border-radius: 14px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 600;
+      box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+    }
+    .telegram-btn:active {
+      background: var(--neon-blue);
+      color: #000;
+    }
+    .telegram-icon { width: 22px; height: 22px; fill: currentColor; }
+    footer {
+      margin-top: 20px;
+      font-size: 0.72rem;
+      color: #64748b;
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cyber-stream stream-1"></div>
+  <div class="cyber-stream stream-2"></div>
+  <div class="sakura-container" id="sakuraBox"></div>
+
+  <div class="player-card">
+    <div class="japanese-badge">東京夜 • TOKYO LO-FI</div>
+
+    <div class="disc-wrapper">
+      <div class="vinyl">
+        <img id="trackCover" class="disc-img" src="" alt="Album Cover">
+      </div>
+    </div>
+
+    <div class="equalizer-bar-group" id="eqGroup">
+      <div class="eq-bar"></div>
+      <div class="eq-bar"></div>
+      <div class="eq-bar"></div>
+      <div class="eq-bar"></div>
+      <div class="eq-bar"></div>
+    </div>
+
+    <div class="song-title" id="trackTitle">Loading...</div>
+    <div class="artist-name" id="trackArtist">...</div>
+
+    <div class="progress-box">
+      <div class="progress-bar-container" id="progressBar" onclick="seekSong(event)">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="time-info">
+        <span id="currentTime">0:00</span>
+        <span id="durationTime">0:00</span>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button class="ctrl-btn" onclick="prevSong()">⏮</button>
+      <button class="play-btn" id="playBtn" onclick="togglePlay()">▶</button>
+      <button class="ctrl-btn" onclick="nextSong()">⏭</button>
+    </div>
+
+    <a class="telegram-btn" id="mainTgBtn" href="https://t.me/" target="_blank">
+      <svg class="telegram-icon" viewBox="0 0 24 24">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.52 2.77-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+      </svg>
+      ចូលរួម Telegram ផ្លូវការ
+    </a>
+
+    <footer>GLOBAL EDITION • VERCEL APP</footer>
+  </div>
+
+  <audio id="audioPlayer"></audio>
+
+  <script>
+    const defaultPlaylist = [
+      {
+        title: "Midnight in Shibuya",
+        artist: "東京サウンド • Lofi Beats",
+        cover: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=400",
+        src: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3"
+      },
+      {
+        title: "Kyoto Rain & Tea",
+        artist: "桜の夢 • Sakura Beats",
+        cover: "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?w=400",
+        src: "https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=chill-abstract-intention-12099.mp3"
+      }
+    ];
+
+    let playlist = JSON.parse(localStorage.getItem('my_tokyo_playlist')) || defaultPlaylist;
+    let currentTrack = 0;
+
+    const audio = document.getElementById('audioPlayer');
+    const playBtn = document.getElementById('playBtn');
+    const trackCover = document.getElementById('trackCover');
+    const trackTitle = document.getElementById('trackTitle');
+    const trackArtist = document.getElementById('trackArtist');
+    const progressFill = document.getElementById('progressFill');
+    const currentTimeEl = document.getElementById('currentTime');
+    const durationTimeEl = document.getElementById('durationTime');
+    const eqGroup = document.getElementById('eqGroup');
+    const mainTgBtn = document.getElementById('mainTgBtn');
+
+    if (localStorage.getItem('my_tg_link')) {
+      mainTgBtn.href = localStorage.getItem('my_tg_link');
+    }
+
+    function loadSong(index) {
+      if (playlist.length === 0) return;
+      const song = playlist[index];
+      trackTitle.innerText = song.title;
+      trackArtist.innerText = song.artist;
+      trackCover.src = song.cover;
+      audio.src = song.src;
+    }
+
+    loadSong(currentTrack);
+
+    function togglePlay() {
+      if (playlist.length === 0) return;
+      if (audio.paused) {
+        audio.play().then(() => {
+          playBtn.innerText = "⏸";
+          trackCover.classList.add('spinning');
+          eqGroup.classList.add('playing-eq');
+        }).catch(e => console.log(e));
+      } else {
+        audio.pause();
+        playBtn.innerText = "▶";
+        trackCover.classList.remove('spinning');
+        eqGroup.classList.remove('playing-eq');
+      }
+    }
+
+    function nextSong() {
+      if (playlist.length === 0) return;
+      currentTrack = (currentTrack + 1) % playlist.length;
+      loadSong(currentTrack);
+      togglePlay();
+    }
+
+    function prevSong() {
+      if (playlist.length === 0) return;
+      currentTrack = (currentTrack - 1 + playlist.length) % playlist.length;
+      loadSong(currentTrack);
+      togglePlay();
+    }
+
+    audio.addEventListener('timeupdate', () => {
+      if (audio.duration) {
+        const percent = (audio.currentTime / audio.duration) * 100;
+        progressFill.style.width = percent + '%';
+        currentTimeEl.innerText = formatTime(audio.currentTime);
+        durationTimeEl.innerText = formatTime(audio.duration);
+      }
+    });
+
+    function seekSong(e) {
+      const container = document.getElementById('progressBar');
+      const clickX = e.offsetX;
+      const width = container.clientWidth;
+      if (audio.duration) {
+        audio.currentTime = (clickX / width) * audio.duration;
+      }
+    }
+
+    function formatTime(sec) {
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      return `${m}:${s < 10 ? '0' : ''}${s}`;
+    }
+
+    audio.addEventListener('ended', nextSong);
+
+    const sakuraBox = document.getElementById('sakuraBox');
+    for (let i = 0; i < 20; i++) {
+      const petal = document.createElement('div');
+      petal.classList.add('petal');
+      petal.style.left = Math.random() * 100 + 'vw';
+      petal.style.width = (Math.random() * 8 + 8) + 'px';
+      petal.style.height = (Math.random() * 12 + 10) + 'px';
+      petal.style.animationDuration = (Math.random() * 6 + 5) + 's';
+      petal.style.animationDelay = (Math.random() * 5) + 's';
+      sakuraBox.appendChild(petal);
+    }
+  </script>
+</body>
+</html>
